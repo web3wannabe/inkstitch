@@ -193,6 +193,105 @@ Improvement: 35 fewer changes
 
 ---
 
+### 7. Intelligent Auto-Connect (Smart Routing) ✅
+**File**: `lib/extensions/auto_connect.py`
+**Template**: `templates/auto_connect.xml`
+**Menu**: Edit > Auto-Connect (Intelligent Routing)
+
+**What it does**:
+- Intelligently routes jump stitches between stitch groups
+- Minimizes total jump stitch length
+- Automatically adds trims for long jumps
+- Tries to hide jumps under existing stitches
+- Optimizes stitch order using nearest-neighbor algorithm
+
+**Benefits**:
+- Less thread waste
+- Fewer visible jumps on fabric
+- Faster stitching time
+- Better overall quality
+- Reduced manual cleanup
+
+**Parameters**:
+- Max jump without trim (3-50mm, default 10mm)
+- Optimize stitch group order (on/off)
+- Try to hide jumps under stitches (on/off)
+- Auto-trim long jumps (on/off)
+
+**Usage**:
+1. Select your design (or entire document)
+2. Extensions > Ink/Stitch > Edit > Auto-Connect
+3. Set max jump threshold
+4. Enable desired optimizations
+5. Apply
+
+**Example Output**:
+```
+Auto-Connect Optimization Complete!
+
+Original Routing:
+  Total jumps: 156
+  Total jump length: 847.3 mm
+  Average jump: 5.4 mm
+  Long jumps (>10mm): 23
+
+Optimized Routing:
+  Total jumps: 156
+  Total jump length: 512.1 mm
+  Average jump: 3.3 mm
+  Long jumps (>10mm): 8
+
+Improvement: 335.2 mm (39.6%) shorter jumps
+```
+
+**How it works**:
+1. **Order Optimization**: Reorders stitch groups within same color using nearest-neighbor
+2. **Auto-Trim**: Adds trim commands for jumps exceeding threshold
+3. **Hidden Paths**: Attempts to route jumps along existing stitches when possible
+4. **Statistics**: Shows before/after comparison
+
+---
+
+### 8. Visualize Jump Stitches ✅
+**File**: `lib/extensions/visualize_routing.py`
+**Template**: `templates/visualize_routing.xml`
+**Menu**: Visualize and Export > Visualize Jump Stitches
+
+**What it does**:
+- Creates visual overlay showing all jump stitches
+- Color-codes jumps by length (green/yellow/red)
+- Labels long jumps with their lengths
+- Helps identify routing problems before stitching
+
+**Color Coding**:
+- 🟢 **Green**: Short jumps (acceptable, <5mm default)
+- 🟡 **Yellow**: Medium jumps (acceptable, 5-15mm default)
+- 🔴 **Red**: Long jumps (problematic, >15mm default)
+
+**Parameters**:
+- Short jump threshold (1-20mm, default 5mm)
+- Long jump threshold (5-50mm, default 15mm)
+
+**Usage**:
+1. Select your design
+2. Extensions > Ink/Stitch > Visualize and Export > Visualize Jump Stitches
+3. Set thresholds
+4. Apply
+5. Review the colored jump visualization layer
+
+**Workflow**:
+1. **First**: Run "Visualize Jump Stitches" to see problems
+2. **Then**: Run "Auto-Connect" to optimize routing
+3. **Finally**: Run "Visualize" again to confirm improvement
+
+**Output**:
+- Creates a new layer: "Jump Stitch Visualization"
+- Layer is ignored by embroidery export (marked as ignore)
+- Long jumps are labeled with distance in mm
+- Delete layer when done analyzing
+
+---
+
 ## Installation
 
 These features are part of the InkStitch extension. To use them:
@@ -223,6 +322,8 @@ These features are part of the InkStitch extension. To use them:
 ✅ 3D/dimensional effects
 ✅ TrueType font conversion (with path conversion step)
 ✅ Built-in design library
+✅ Intelligent auto-connect / smart routing
+✅ Jump stitch visualization
 
 ### Still Missing (for future development):
 
@@ -247,7 +348,9 @@ inkstitch/
 │   │   ├── multi_hoop.py             # New
 │   │   ├── dimensional_effect.py     # New
 │   │   ├── design_library.py         # New
-│   │   └── ttf_to_embroidery.py      # New
+│   │   ├── ttf_to_embroidery.py      # New
+│   │   ├── auto_connect.py           # New
+│   │   └── visualize_routing.py      # New
 │   └── stitches/
 │       └── dimensional_fill.py        # New (experimental)
 ├── templates/
@@ -256,7 +359,9 @@ inkstitch/
 │   ├── multi_hoop.xml                 # New
 │   ├── dimensional_effect.xml         # New
 │   ├── design_library.xml             # New
-│   └── ttf_to_embroidery.xml          # New
+│   ├── ttf_to_embroidery.xml          # New
+│   ├── auto_connect.xml               # New
+│   └── visualize_routing.xml          # New
 └── designs/
     └── library/                       # New (created on first run)
         ├── flower_simple.svg

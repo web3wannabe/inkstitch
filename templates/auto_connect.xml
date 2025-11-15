@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension translationdomain="inkstitch" xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <name>Auto-Connect (Intelligent Routing)</name>
+    <id>org.{{ id_inkstitch }}.auto_connect</id>
+    <param name="extension" type="string" gui-hidden="true">auto_connect</param>
+
+    <param name="max_jump_mm" type="float" gui-text="Max jump without trim (mm)" precision="1" min="3" max="50">10.0</param>
+
+    <spacer />
+    <separator />
+    <spacer />
+
+    <param name="optimize_order" type="boolean" gui-text="Optimize stitch group order">true</param>
+    <param name="hide_jumps" type="boolean" gui-text="Try to hide jumps under stitches">true</param>
+    <param name="auto_trim" type="boolean" gui-text="Auto-trim long jumps">true</param>
+
+    <spacer />
+    <separator />
+    <spacer />
+
+    <label appearance="header">What this does:</label>
+    <label>Intelligently routes jump stitches between elements to:</label>
+    <label>• Minimize total jump stitch length</label>
+    <label>• Find shortest paths between groups</label>
+    <label>• Auto-trim jumps longer than max distance</label>
+    <label>• Hide jumps under existing stitches when possible</label>
+    <label>• Optimize stitch order using nearest-neighbor</label>
+
+    <spacer />
+
+    <label appearance="header">Benefits:</label>
+    <label>• Less thread waste</label>
+    <label>• Fewer visible jumps</label>
+    <label>• Faster stitching</label>
+    <label>• Better overall quality</label>
+
+    <effect>
+        <object-type>all</object-type>
+        <menu-tip>Intelligently route jump stitches</menu-tip>
+        <effects-menu>
+            <submenu name="{{ menu_inkstitch }}" translatable="no">
+                <submenu name="Edit" />
+            </submenu>
+        </effects-menu>
+    </effect>
+    <script>
+        {{ command_tag | safe }}
+    </script>
+</inkscape-extension>

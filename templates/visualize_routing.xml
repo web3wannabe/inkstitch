@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inkscape-extension translationdomain="inkstitch" xmlns="http://www.inkscape.org/namespace/inkscape/extension">
+    <name>Visualize Jump Stitches</name>
+    <id>org.{{ id_inkstitch }}.visualize_routing</id>
+    <param name="extension" type="string" gui-hidden="true">visualize_routing</param>
+
+    <param name="short_threshold_mm" type="float" gui-text="Short jump threshold (mm)" precision="1" min="1" max="20">5.0</param>
+    <param name="long_threshold_mm" type="float" gui-text="Long jump threshold (mm)" precision="1" min="5" max="50">15.0</param>
+
+    <spacer />
+    <separator />
+    <spacer />
+
+    <label appearance="header">Color Coding:</label>
+    <label>🟢 Green: Short jumps (OK)</label>
+    <label>🟡 Yellow: Medium jumps (acceptable)</label>
+    <label>🔴 Red: Long jumps (problematic)</label>
+
+    <spacer />
+
+    <label>Creates a visual overlay showing all jump stitches.</label>
+    <label>Long jumps are labeled with their length.</label>
+    <spacer />
+    <label>Use this to identify routing problems before</label>
+    <label>running Auto-Connect optimization.</label>
+
+    <effect>
+        <object-type>all</object-type>
+        <menu-tip>Visualize jump stitches and routing</menu-tip>
+        <effects-menu>
+            <submenu name="{{ menu_inkstitch }}" translatable="no">
+                <submenu name="Visualize and Export" />
+            </submenu>
+        </effects-menu>
+    </effect>
+    <script>
+        {{ command_tag | safe }}
+    </script>
+</inkscape-extension>
